@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Unbounded:wght@200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sonsie+One&display=swap");
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.Home-Page {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  object-fit: cover;
+}
+
+.Navigation-Bar {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  z-index: 100;
+ 
+}
+
+.Custom-NavBar {
+  width: 95%;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(
+    90deg,
+    rgba(46, 46, 46, 0) 0%,
+    #d2d2d2 50%,
+    rgba(45, 45, 45, 0) 100%
+  );
+  border-image-slice: 1;
+  background: transparent !important; /*!important overides all other styling and makes this styling a priority, well like that isnt obvious???*/
+}
+
+.nav-button {
+  color: #ffffff !important; /*does the same here*/
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  padding: 8px 24px !important; /*and here*/
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #00ced1;
+  color: #000000 !important; /*do i have to say it again?*/
+}
+
+.App-header {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.Hero-Wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.Home-Page-Text {
+  color: #fff;
+  font-family: "Unbounded", sans-serif;
+  font-size: 110px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.Bottom-Line {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: -10px;
+}
+
+.F1-Text {
+  color: #fff;
+  -webkit-text-stroke: 2px #00c9d7; /*took a while to figure out how to add a stroke and then just desided to researcg it, webkit adds a stroke of a certain size and the fills it with the chosen colour, it makes everything easier to my understanding*/
+  font-family: "Sonsie One", cursive;
+  font-size: 140px;
+  line-height: 1;
+}
+
+.Showdown-Text {
+  color: #fff;
+  font-family: "Unbounded", sans-serif;
+  font-size: 110px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.Hero-Subtext {
+  color: #d2d2d2;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  max-width: 650px;
+  margin: 25px 0 35px 0;
+  line-height: 1.5;
+}
+
+/* HERO BUTTONS */
+.Hero-Button-Group {
+  display: flex;
+  gap: 20px;
+}
+
+.Hero-Primary-Button {
+  background-color: #00ced1;
+  color: #000;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  padding: 16px 36px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.Hero-Primary-Button:hover {
+  transform: scale(1.05);
+}
+
+.Hero-Secondary-Button {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  padding: 16px 36px;
+  border-radius: 15px;
+  border: 1px solid #444;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.Hero-Secondary-Button:hover {
+  background-color: #00ced1;
+  color: #000000 !important; /*well well well*/
+}
+
+.Footer-Text {
+  padding-top: 25px;
+  width: 95%;
+  border-top: 1px solid;
+  border-image: linear-gradient(
+    90deg,
+    rgba(46, 46, 46, 0) 0%,
+    #d2d2d2 50%,
+    rgba(45, 45, 45, 0) 100%
+  );
+  border-image-slice: 1;
+  background: transparent !important;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: #777;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  z-index: 5;
+}
