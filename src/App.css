@@ -133,7 +133,7 @@ main {
   font-family: "Space Grotesk", sans-serif;
   font-size: clamp(14px, 1.5vw, 18px);
   max-width: 600px;
-  margin: 5px 0 100px 0;
+  margin: 5px 0 50px 0;
   line-height: 1.4;
 }
 
