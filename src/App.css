@@ -1,11 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Unbounded:wght@200..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sonsie+One&display=swap");
 
+/*Root Layout*/
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
 .App {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background-color: #000;
+  position: relative;
+  overflow: hidden;
 }
 
 .Home-Page {
@@ -15,16 +34,24 @@
   object-fit: cover;
 }
 
+.Track-Outline {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  object-fit: cover;
+}
+
+/*Navigation*/
 .Navigation-Bar {
   width: 100vw;
   display: flex;
   justify-content: center;
-  position: absolute;
-  z-index: 100;
- 
+  position: relative;
+  z-index: 1000;
+  padding-top: 10px;
 }
 
-.Custom-NavBar {
+.Navigation-Bar .Custom-NavBar {
   width: 95%;
   border-bottom: 1px solid;
   border-image: linear-gradient(
@@ -34,30 +61,22 @@
     rgba(45, 45, 45, 0) 100%
   );
   border-image-slice: 1;
-  background: transparent !important; /*!important overides all other styling and makes this styling a priority, well like that isnt obvious???*/
+  background: transparent;
 }
 
-.nav-button {
-  color: #ffffff !important; /*does the same here*/
+.Navigation-Bar .nav-button {
+  color: #ffffff;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
-  padding: 8px 24px !important; /*and here*/
+  padding: 8px 24px;
   border-radius: 12px;
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.nav-button:hover {
+.Navigation-Bar .nav-button:hover {
   background-color: #00ced1;
-  color: #000000 !important; /*do i have to say it again?*/
-}
-
-.App-header {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 10;
+  color: #000000;
 }
 
 .Hero-Wrapper {
@@ -65,36 +84,45 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  max-width: 90%;
 }
 
 .Home-Page-Text {
   color: #fff;
   font-family: "Unbounded", sans-serif;
-  font-size: 110px;
+  font-size: clamp(30px, 6vw, 110px);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
 .Bottom-Line {
   display: flex;
   align-items: center;
-  gap: 25px;
-  margin-top: -10px;
+  gap: 20px;
 }
 
 .F1-Text {
   color: #fff;
-  -webkit-text-stroke: 2px #00c9d7; /*took a while to figure out how to add a stroke and then just desided to researcg it, webkit adds a stroke of a certain size and the fills it with the chosen colour, it makes everything easier to my understanding*/
+  -webkit-text-stroke: 2px #00c9d7;
   font-family: "Sonsie One", cursive;
-  font-size: 140px;
+  font-size: clamp(40px, 8vw, 140px);
   line-height: 1;
 }
 
 .Showdown-Text {
   color: #fff;
   font-family: "Unbounded", sans-serif;
-  font-size: 110px;
+  font-size: clamp(30px, 6vw, 110px);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.Comparison-Text {
+  color: #fff;
+  font-family: "Unbounded", sans-serif;
+  font-size: clamp(30px, 4vw, 96px);
   font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
@@ -103,54 +131,60 @@
 .Hero-Subtext {
   color: #d2d2d2;
   font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  max-width: 650px;
-  margin: 25px 0 35px 0;
-  line-height: 1.5;
+  font-size: clamp(14px, 1.5vw, 18px);
+  max-width: 600px;
+  margin: 5px 0 100px 0;
+  line-height: 1.4;
 }
 
-/* HERO BUTTONS */
+/*My Buttons*/
 .Hero-Button-Group {
   display: flex;
   gap: 20px;
 }
 
-.Hero-Primary-Button {
+.Hero-Button-Group .Hero-Primary-Button {
   background-color: #00ced1;
   color: #000;
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
-  padding: 16px 36px;
-  border-radius: 15px;
+  padding: 12px 30px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
+  text-decoration: none;
   transition: transform 0.2s ease;
 }
 
-.Hero-Primary-Button:hover {
-  transform: scale(1.05);
-}
-
-.Hero-Secondary-Button {
-  background: rgba(0, 0, 0, 0.2);
+.Hero-Button-Group .Hero-Secondary-Button {
+  background: rgba(0, 0, 0, 0.4);
   color: #fff;
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
-  padding: 16px 36px;
-  border-radius: 15px;
+  padding: 12px 30px;
+  border-radius: 12px;
   border: 1px solid #444;
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-decoration: none;
 }
 
-.Hero-Secondary-Button:hover {
+.Hero-Button-Group .Hero-Secondary-Button:hover {
   background-color: #00ced1;
-  color: #000000 !important; /*well well well*/
+  color: #000000;
+  border-color: #00ced1; 
+}
+
+/*My Footer*/
+.Footer-Info {
+  width: 100%;
+  padding-bottom: 20px;
+  position: relative;
 }
 
 .Footer-Text {
-  padding-top: 25px;
+  padding-top: 15px;
   width: 95%;
+  margin: 0 auto;
   border-top: 1px solid;
   border-image: linear-gradient(
     90deg,
@@ -159,13 +193,52 @@
     rgba(45, 45, 45, 0) 100%
   );
   border-image-slice: 1;
-  background: transparent !important;
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
   text-align: center;
   color: #777;
   font-family: "Space Grotesk", sans-serif;
-  font-size: 13px;
-  z-index: 5;
+  font-size: 12px;
+}
+
+.toggle-container {
+  display: flex;
+  position: relative;
+  background-color: #2a2a2a; /* Dark grey background */
+  padding: 5px;
+  border-radius: 12px;
+  width: fit-content;
+  border: 1px solid #444;
+}
+
+.toggle-btn {
+  position: relative;
+  z-index: 2; /* Sits above the slider */
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.3s ease;
+  width: 300px; /* Adjust based on your text length */
+}
+
+.toggle-btn.active {
+  color: #000; /* Text turns dark when highlighted */
+}
+
+/* The Blue Sliding Pill */
+.slider {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  bottom: 5px;
+  width: calc(50% - 5px); /* Covers half the container */
+  background-color: #00ced1; /*cyan color*/
+  border-radius: 10px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.slide-right {
+  transform: translateX(100%); 
 }
