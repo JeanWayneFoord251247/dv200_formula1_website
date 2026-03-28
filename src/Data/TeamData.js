@@ -1,4 +1,3 @@
-// src/TeamData.js
 export const teamStyles = {
   red_bull: { mainColor: "#3671C6" },
   mclaren: { mainColor: "#FF8000" },
