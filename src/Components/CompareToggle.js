@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "../App.css";
 
-function CompareToggle() {
-  const [activeTab, setActiveTab] = useState("drivers");
-
+function CompareToggle({ activeTab, setActiveTab }) {
   return (
     <div className="toggle-container">
       <div

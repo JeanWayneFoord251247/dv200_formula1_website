@@ -1,47 +1,49 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Unbounded:wght@200..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sonsie+One&display=swap");
 
-/*Root Layout*/
-html, body {
-  height: 100%;
+html,
+body {
+  min-height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 main {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
-  overflow: hidden;
 }
 
 .App {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  background-color: #000;
+  background: linear-gradient(180deg, #000 0%, #333 100%);
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
-.Home-Page {
-  height: 100vh;
-  width: 100vw;
+.Pattern-Background-Layer {
+  background-image: url("../src/Assets/img/Pattern.png");
+  width: 100%;
+  height: 100%;
   position: absolute;
-  object-fit: cover;
 }
 
 .Track-Outline {
-  height: 100vh;
-  width: 100vw;
   position: absolute;
+  width: 100vw;
+  height: 85vh;
+  pointer-events: none;
   object-fit: cover;
+  object-position: center;
+  opacity: 80%;
 }
 
-/*Navigation*/
 .Navigation-Bar {
   width: 100vw;
   display: flex;
@@ -79,12 +81,19 @@ main {
   color: #000000;
 }
 
+.nav-button.active {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+}
+
 .Hero-Wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   max-width: 90%;
+  margin-top: 20vh;
 }
 
 .Home-Page-Text {
@@ -113,13 +122,26 @@ main {
 .Showdown-Text {
   color: #fff;
   font-family: "Unbounded", sans-serif;
-  font-size: clamp(30px, 6vw, 110px);
+  font-size: clamp(
+    30px,
+    6vw,
+    110px
+  ); /*This replaces media queries making text responsive set a minimum , preferred, and maximum height of text on screens*/
   font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .Comparison-Text {
+  color: #fff;
+  font-family: "Unbounded", sans-serif;
+  font-size: clamp(30px, 4vw, 96px);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.Timeline-Text {
   color: #fff;
   font-family: "Unbounded", sans-serif;
   font-size: clamp(30px, 4vw, 96px);
@@ -137,20 +159,31 @@ main {
   line-height: 1.4;
 }
 
-/*My Buttons*/
 .Hero-Button-Group {
   display: flex;
   gap: 20px;
 }
 
 .Hero-Button-Group .Hero-Primary-Button {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+  font-family: "Unbounded", sans-serif;
+  padding: 12px 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.Hero-Button-Group .Hero-Primary-Button:hover {
   background-color: #00ced1;
-  color: #000;
+  border-bottom: 4px #00ced1;
+  color: #000000;
   font-family: "Unbounded", sans-serif;
   font-weight: 600;
   padding: 12px 30px;
   border-radius: 12px;
-  border: none;
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.2s ease;
@@ -171,7 +204,7 @@ main {
 .Hero-Button-Group .Hero-Secondary-Button:hover {
   background-color: #00ced1;
   color: #000000;
-  border-color: #00ced1; 
+  border-color: #00ced1;
 }
 
 /*My Footer*/
@@ -199,46 +232,455 @@ main {
   font-size: 12px;
 }
 
+.Compare-Toggle-Button {
+  width: 95%;
+  max-width: 600px;
+}
+
 .toggle-container {
   display: flex;
   position: relative;
-  background-color: #2a2a2a; /* Dark grey background */
+  background-color: #2a2a2a;
   padding: 5px;
   border-radius: 12px;
-  width: fit-content;
+  width: 95%;
+  max-width: 600px;
   border: 1px solid #444;
 }
 
 .toggle-btn {
   position: relative;
-  z-index: 2; /* Sits above the slider */
+  z-index: 2;
   background: none;
   border: none;
   color: #fff;
-  padding: 10px 25px;
+  padding: 12px 10px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   transition: color 0.3s ease;
-  width: 300px; /* Adjust based on your text length */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(12px, 3vw, 16px);
 }
 
 .toggle-btn.active {
-  color: #000; /* Text turns dark when highlighted */
+  color: #000;
 }
 
-/* The Blue Sliding Pill */
 .slider {
   position: absolute;
   top: 5px;
   left: 5px;
   bottom: 5px;
-  width: calc(50% - 5px); /* Covers half the container */
-  background-color: #00ced1; /*cyan color*/
+  width: calc(50% - 5px);
+  background-color: #00ced1;
   border-radius: 10px;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  box-shadow: 0 0 15px rgba(0, 206, 209, 0.5);
 }
 
 .slide-right {
-  transform: translateX(100%); 
+  transform: translateX(100%);
+}
+
+.Selection-Compare {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 75px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.custom-select-wrapper {
+  background-color: transparent;
+  border: 1px solid #444;
+  border-radius: 8px;
+  display: inline-block;
+  min-height: 50px;
+  height: auto;
+  position: relative;
+  z-index: 1001;
+}
+
+.custom-select-wrapper .f1-dropdown .btn.dropdown-toggle {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  width: 100%;
+  height: 44px;
+  min-width: 180px;
+  max-width: 250px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.custom-select-wrapper .f1-dropdown .dropdown-menu {
+  background-color: #1a1a1a;
+  border: 1px solid #444;
+  width: 100%;
+  min-width: 200px;
+  z-index: 9999;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.f1-dropdown .dropdown-item {
+  color: #ffffff;
+  padding: 10px 20px;
+}
+
+.f1-dropdown .dropdown-item:hover {
+  background-color: #00ced1;
+  color: #000;
+}
+
+.Selection-Compare .btn-compare-main {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #2a2a2a;
+  height: 38px;
+  width: 125px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.Selection-Compare .btn-compare-main:not(:disabled) {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+  cursor: pointer;
+}
+
+.Selection-Compare .btn-compare-main:not(:disabled):hover {
+  background-color: #00ced1;
+  transform: translateY(-2px);
+  color: #000;
+}
+
+.App-header .Hero-Wrapper .Results-Wrapper .btn-back {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #2a2a2a;
+  height: 38px;
+  width: 175px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.App-header .Hero-Wrapper .Results-Wrapper .btn-back:not(:disabled) {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+  cursor: pointer;
+}
+
+.App-header .Hero-Wrapper .Results-Wrapper .btn-back:not(:disabled):hover {
+  background-color: #00ced1;
+  transform: translateY(-2px);
+  color: #000;
+}
+
+.Comparison-Grid {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.card-driver {
+  background-image: url(../src/Assets/img/Frame\ 28.png);
+  background-size: cover;
+  width: 90vw;
+  max-width: 400px;
+  height: 400px;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.card-team {
+  width: 90vw;
+  max-width: 400px;
+  height: 400px;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  background-color: #333;
+}
+
+.card-team::before {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-image: url(../src/Assets/img/Frame\ 28\ \(2\).png);
+  background-size: cover;
+  background-position: center;
+  transform: rotate(90deg);
+  transform-origin: center;
+  scale: 1.5;
+  z-index: 0;
+}
+
+.card-team > * {
+  position: relative;
+  z-index: 1;
+}
+
+.Driver-Headshot {
+  position: absolute;
+  width: 75%;
+  height: auto;
+  top: 20%;
+  left: 65%;
+  transform: translateX(-40%);
+  z-index: 1;
+  filter: drop-shadow(15px 15px 5px rgba(0, 0, 0, 1));
+}
+
+.Card-Overlay-Fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  z-index: 2;
+}
+
+.Driver-Name-Wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  bottom: 53%;
+  left: 1%;
+  position: absolute;
+  z-index: 3;
+  color: white;
+  text-align: left;
+}
+
+.First-Name {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.Last-Name {
+  display: block;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.Constructor-Name-Wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -175px;
+  left: 0;
+  z-index: 3;
+  color: white;
+  pointer-events: none;
+}
+
+.Team-Full-Name {
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  width: 80%;
+  line-height: 1.1;
+  word-wrap: break-word;
+}
+
+.vs-divider {
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.Pill-Bar-Wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.Pill-Bar {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 50px;
+}
+
+.Pill-Item {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.Pill-Item.active {
+  background: #00ced1;
+  opacity: 1;
+  box-shadow: 0 0 15px #00ced1;
+}
+
+.Chart-Area {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.Stat-Focus-Title {
+  font-family: "Space Grotesk" sans-serif;
+  color: #fff;
+  font-weight: 700;
+}
+
+.Stats-Showcase-Container {
+  margin-bottom: 50px;
+}
+
+.Selection-Compare {
+  margin-bottom: 50px;
+}
+
+.Selection-Compare .Timeline-Grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+
+}
+
+.Selection-Compare .btn-compare-main-timeline {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #2a2a2a;
+  height: 38px;
+  width: 250px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.Selection-Compare .btn-compare-main-timeline:not(:disabled) {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+  cursor: pointer;
+}
+
+.Selection-Compare .btn-compare-main-timeline:not(:disabled):hover {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+  cursor: pointer;
+}
+
+ .Comparison-View .btn-back {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #2a2a2a;
+  height: 38px;
+  width: 175px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+ .Comparison-View .btn-back:not(:disabled) {
+  color: #00ced1;
+  font-weight: bold;
+  border-bottom: 4px solid #00ced1;
+  cursor: pointer;
+}
+
+.Comparison-View .btn-back:not(:disabled):hover {
+  background-color: #00ced1;
+  transform: translateY(-2px);
+  color: #000;
+}
+
+.Chart-Wrapper {
+  position: relative;
+  height: 500px; 
+  width: 100%; 
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.loader{
+  color: #fff;
+}
+
+/* Container for everything */
+.Comparison-View {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This keeps the Pill-Bar centered even if it's narrow */
+  width: 100%;
+}
+
+.Pill-Bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  width: auto; 
+}
+
+.Chart-Wrapper-Timeline {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 25px;
+  width: 90vw;         
+  max-width: 1100px;    
+  height: 480px;        
+  position: relative;
 }

@@ -1,11 +1,11 @@
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import TrackOutline from"../Assets/img/Home Page (1).png"
+import TrackOutline from "../Assets/img/Home Page (1).png";
 
 function HomePage() {
   return (
-    <> 
+    <>
       <img
         src={TrackOutline}
         className="Track-Outline"
