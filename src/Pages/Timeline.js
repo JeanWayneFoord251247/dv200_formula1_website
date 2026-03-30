@@ -46,7 +46,6 @@ function TimelinePage({ drivers, constructors, isLoading }) {
           </p>
 
           <div className="Compare-Toggle-Button">
-            {/* Pass props to your existing Toggle */}
             <CompareToggle activeTab={activeTab} setActiveTab={handleToggle} />
           </div>
 

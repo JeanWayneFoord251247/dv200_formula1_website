@@ -20,3 +20,5 @@ const WinsPieChart = ({ slotA, slotB, dataA, dataB, activeTab }) => {
   return <Pie data={data} options={{ responsive: true, maintainAspectRatio: false }} />;
 };
 export default WinsPieChart;
+
+
