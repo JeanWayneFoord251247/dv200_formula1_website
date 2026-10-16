@@ -62,10 +62,37 @@ Clone the project to your local machine:
 
 ```bash
 # Clone the repository
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+git clone [https://github.com/your-username/dv200_formula1_website.git](https://github.com/your-username/dv200_formula1_website.git)
 
 # Navigate into the project directory
-cd your-repo-name
+cd dv200_formula1_website
+
+# Install project dependencies
+npm install
 ```
+
+---
+
+### 3. Run the development server
+
+```bash
+npm start
+```
+
+---
+
+## 4. Mockups
+
+<p align="center">
+  <img src="./Assets/img/LaptopMockup.png" alt="Grid Desktop" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./Assets/img/TabletMockup.png" alt="Grid Tablet" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./Assets/img/PhoneMockup.png" alt="Grid Smartphone" width="100%" />
+</p>
 
 ---
