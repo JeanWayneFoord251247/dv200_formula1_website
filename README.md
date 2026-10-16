@@ -84,15 +84,15 @@ npm start
 ## 4. Mockups
 
 <p align="center">
-  <img src="./Assets/img/LaptopMockup.png" alt="Grid Desktop" width="100%" />
+  <img src="/src/Assets/img/LaptopMockup.png" alt="Grid Desktop" width="100%" />
 </p>
 
 <p align="center">
-  <img src="./Assets/img/TabletMockup.png" alt="Grid Tablet" width="100%" />
+  <img src="/src/Assets/img/TabletMockup.png" alt="Grid Tablet" width="100%" />
 </p>
 
 <p align="center">
-  <img src="./Assets/img/PhoneMockup.png" alt="Grid Smartphone" width="100%" />
+  <img src="/src/Assets/img/PhoneMockup.png" alt="Grid Smartphone" width="100%" />
 </p>
 
 ---
