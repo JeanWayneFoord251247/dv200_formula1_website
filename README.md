@@ -51,7 +51,7 @@ Ensure you have the following installed locally:
 
 * **Runtime Environment:** [Node.js](https://nodejs.org/) 
 * **Package Manager:** [npm](https://www.npmjs.com/) (bundled with Node)
-* **Version Control:** [Git](https://git-scm.com/)
+* **Version Control:** [Github](https://github.com/)
 * **Web Browser:** Modern browser (Chrome)
 
 ---
