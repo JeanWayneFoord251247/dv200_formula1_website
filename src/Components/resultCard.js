@@ -2,16 +2,28 @@ import React from "react";
 import { teamStyles } from "../Data/TeamData";
 import "../App.css";
 
-const ResultCard = ({ item, activeTab }) => {/* The Blueprint for a single info card that adapts whether it's showing a person or a team. */
+const ResultCard = ({ item, activeTab, isSecondDriver = false }) => {/* The Blueprint for a single info card that adapts whether it's showing a person or a team. */
+  const isDriver = activeTab === "drivers"; 
+  const itemId = isDriver ? item.driverId : item.constructorId; 
+
+ 
   const getTeamColor = (item) => { /* A Paint Picker that grabs the official team color (like Ferrari red) or defaults to gray if it's missing. */
     if (!item) return "#333";
     const teamId = item.Constructor?.constructorId || item.constructorId;
-    return teamStyles[teamId]?.mainColor || "#333";
+    const team = teamStyles[teamId];
+    if (!team) return "#333"; 
+
+  if (isDriver) {
+    if(team.drivers && team.drivers[item.driverId]) {
+      return team.drivers[item.driverId]; 
+    }
+    if (isSecondDriver && team.secondaryColor) {
+      return team.secondaryColor; 
+  }
+}
+
+return team.mainColor || "#333";
   };
-
-  const isDriver = activeTab === "drivers"; /* A Quick Switch that checks if the user is looking at the Drivers list or the Teams list. */
-  const itemId = isDriver ? item.driverId : item.constructorId; /* A Label Maker that decides whether to use a Driver ID or a Constructor ID to find the right data. */
-
 
   let imagePath;/* An Image Scout that looks for a photo in my folders but stays calm and hides the image if it can't find the file. */
   try {

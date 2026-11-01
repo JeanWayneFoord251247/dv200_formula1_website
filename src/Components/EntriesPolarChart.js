@@ -12,8 +12,29 @@ import {
 ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
 const EntriesPolarChart = ({ slotA, slotB, dataA, dataB, activeTab }) => {
-  const getColor = (item) =>
-    teamStyles[item.Constructor?.constructorId || item.constructorId]?.mainColor || "#E10600";
+  const isDriver = activeTab === "drivers";
+  
+const teamIdA = slotA?.Constructor?.constructorId || slotA?.constructorId;
+  const teamIdB = slotB?.Constructor?.constructorId || slotB?.constructorId;
+  const isSameTeam = isDriver && teamIdA && teamIdB && teamIdA === teamIdB;
+
+  const getColor = (item, isSecondTeammate = false) => {
+    if (!item) return "#E10600";
+    const teamId = item.Constructor?.constructorId || item.constructorId;
+    const team = teamStyles[teamId];
+    if (!team) return "#E10600";
+
+    if (isDriver) {
+      if (team.drivers && team.drivers[item.driverId]) {
+        return team.drivers[item.driverId];
+      }
+      if (isSecondTeammate && team.secondaryColor) {
+        return team.secondaryColor;
+      }
+    }
+
+    return team.mainColor || "#E10600";
+  };
 
   const data = {
     labels: [
@@ -24,8 +45,8 @@ const EntriesPolarChart = ({ slotA, slotB, dataA, dataB, activeTab }) => {
       {
         data: [dataA, dataB],
         backgroundColor: [
-          getColor(slotA) + "B3", // B3 is approx 70% opacity for that soft look
-          getColor(slotB) + "B3",
+          getColor(slotA, false) + "B3", // B3 is approx 70% opacity for that soft look
+          getColor(slotB, isSameTeam) + "B3",
         ],
         borderColor: "#fff",
         borderWidth: 1,

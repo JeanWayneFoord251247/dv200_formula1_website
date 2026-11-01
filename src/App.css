@@ -15,6 +15,7 @@ main {
   justify-content: center;
   align-items: flex-start;
   position: relative;
+  min-height: 100vh;
 }
 
 .App {
@@ -165,15 +166,15 @@ main {
 }
 
 .Hero-Button-Group .Hero-Primary-Button {
-  color: #00ced1;
-  font-weight: bold;
-  border-bottom: 4px solid #00ced1;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
   font-family: "Unbounded", sans-serif;
+  font-weight: 600;
   padding: 12px 30px;
   border-radius: 12px;
+  border: 1px solid #444;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.2s ease;
 }
 
 .Hero-Button-Group .Hero-Primary-Button:hover {

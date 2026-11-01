@@ -8,94 +8,133 @@ const TimelineComparisonView = ({ selections, type, onBack }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCancelled = false; // Prevents race conditions when switching tabs rapidly
     const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
     const getJolpicaTimelineUrl = (id, category, tab, year) => {
-      const endpointType = tab === "drivers" ? "drivers" : "constructors";
-      const standingsType =
-        tab === "drivers" ? "driverStandings" : "constructorStandings";
-      const base = `https://api.jolpi.ca/ergast/f1/${year}/${endpointType}/${id}`;
+      const isDriver = tab === "drivers";
 
       switch (category) {
         case "wins":
-        case "points":
-          return `${base}/${standingsType}.json`;
-        case "entries":
-          return `${base}/results.json?limit=1`;
-        case "fastestLaps":
-          return `${base}/fastest/1/results.json?limit=1`;
+        case "points": {
+          const endpoint = isDriver ? "driverStandings" : "constructorStandings";
+          return `https://api.jolpi.ca/ergast/f1/${year}/${endpoint}.json?limit=100`;
+        }
+        case "entries": {
+          const entity = isDriver ? "drivers" : "constructors";
+          return `https://api.jolpi.ca/ergast/f1/${year}/${entity}/${id}/results.json?limit=1`;
+        }
+        case "fastestLaps": {
+          const entity = isDriver ? "drivers" : "constructors";
+          return `https://api.jolpi.ca/ergast/f1/${year}/fastest/1/${entity}/${id}/results.json?limit=1`;
+        }
         default:
-          return `${base}/${standingsType}.json`;
+          return "";
       }
     };
 
     const fetchData = async () => {
       setLoading(true);
       try {
+        const isDriver = type === "drivers";
+        const team0 = selections[0]?.constructorId || selections[0]?.Constructor?.constructorId;
+        const team1 = selections[1]?.constructorId || selections[1]?.Constructor?.constructorId;
+        const isSameTeam = isDriver && Boolean(team0 && team1 && team0 === team1);
+
         const datasets = await Promise.all(
-          selections.map(async (item) => {
+          selections.map(async (item, index) => {
             if (!item) return null;
 
-            const id =
-              type === "drivers"
-                ? item.driverId.toLowerCase()
-                : item.constructorId.toLowerCase();
-            const teamId =
-              item.constructorId || item.Constructor?.constructorId;
-            const color = teamStyles[teamId]?.mainColor || "#00D2BE";
+            const id = isDriver
+              ? item.driverId?.toLowerCase()
+              : item.constructorId?.toLowerCase();
 
+            const teamId = item.constructorId || item.Constructor?.constructorId;
+            const team = teamStyles[teamId];
+            let color = team?.mainColor || "#00D2BE";
+            const isSecondTeammate = isSameTeam && index > 0;
+
+            if (isDriver && team) {
+              if (team.drivers && team.drivers[id]) {
+                color = team.drivers[id];
+              } else if (isSecondTeammate && team.secondaryColor) {
+                color = team.secondaryColor;
+              }
+            }
+
+            // Fetch each year sequentially or safely parse
             const yearlyStats = await Promise.all(
               years.map(async (year) => {
                 try {
                   const url = getJolpicaTimelineUrl(id, activeStat, type, year);
                   const res = await fetch(url);
+                  if (!res.ok) return 0;
                   const json = await res.json();
                   const data = json.MRData;
 
                   if (activeStat === "wins" || activeStat === "points") {
-                    const list = data.StandingsTable?.StandingsLists[0];
-                    const entry =
-                      type === "drivers"
-                        ? list?.DriverStandings?.[0]
-                        : list?.ConstructorStandings?.[0];
+                    const standingsList = data.StandingsTable?.StandingsLists?.[0];
+                    if (!standingsList) return 0;
 
-                    if (!entry) return 0;
+                    const list = isDriver
+                      ? standingsList.DriverStandings
+                      : standingsList.ConstructorStandings;
+
+                    // Locate the EXACT driver/constructor in the standings array
+                    const target = list?.find((entry) => {
+                      const entryId = isDriver
+                        ? entry.Driver?.driverId?.toLowerCase()
+                        : entry.Constructor?.constructorId?.toLowerCase();
+                      return entryId === id;
+                    });
+
+                    if (!target) return 0; // Racer didn't score points/compete that year
                     return activeStat === "wins"
-                      ? parseInt(entry.wins || 0)
-                      : parseFloat(entry.points || 0);
+                      ? parseInt(target.wins || 0, 10)
+                      : parseFloat(target.points || 0);
                   }
 
-                  return parseInt(data.total || 0);
+                  // Entries and Fastest Laps read total from root
+                  return parseInt(data.total || 0, 10);
                 } catch (err) {
-                  return 0; // Return 0 for years where data fails
+                  return 0;
                 }
-              }),
+              })
             );
 
             return {
-              label: type === "drivers" ? item.familyName : item.name,
+              label: isDriver ? item.familyName : item.name,
               data: yearlyStats,
               borderColor: color,
               backgroundColor: `${color}33`,
+              borderDash: isSecondTeammate ? [6, 6] : [],
+              pointBackgroundColor: color,
               fill: true,
               tension: 0.3,
             };
-          }),
+          })
         );
 
-        // Filter out any null entries from empty slots
-        setChartData({
-          labels: years,
-          datasets: datasets.filter((d) => d !== null),
-        });
+        if (!isCancelled) {
+          setChartData({
+            labels: years,
+            datasets: datasets.filter((d) => d !== null),
+          });
+        }
       } catch (err) {
         console.error("Timeline Fetch Error:", err);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchData();
+
+    return () => {
+      isCancelled = true; 
+    };
   }, [selections, activeStat, type]);
 
   return (
