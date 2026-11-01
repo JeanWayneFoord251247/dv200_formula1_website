@@ -1,5 +1,7 @@
+import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { teamStyles } from "../Data/TeamData";
 import "../App.css";
 
 function F1Dropdown({
@@ -9,34 +11,59 @@ function F1Dropdown({
   placeholder,
   selectedItem,
 }) {
-  /* these properties act as inputs for a machine to tell it how it should behave */
+  const isDriver = activeTab === "drivers";
 
   const getButtonTitle = () => {
-    if (!selectedItem)
-      return placeholder; /* !selectedItem checks if the option is null, empty or undefined, if the driver has not selected a driver it returns the placeholder */
-    return activeTab ===
-      "drivers" /* here we check if the active tab is drivers */
-      ? `${selectedItem.givenName} ${selectedItem.familyName}` /* the ? checks if the drivers tab is selected then it put the drivers given name and family name usually there surname and puts it into a string */
-      : selectedItem.name; /* the : says if we are not in the drivers tab then return just the team name */
+    if (!selectedItem) return placeholder;
+    return isDriver
+      ? `${selectedItem.givenName} ${selectedItem.familyName}`
+      : selectedItem.name;
   };
 
   const handleSelect = (id) => {
     const found = options.find(
-      /* here we look threw the entire list of drivers/teams one by one */
-      (item) =>
-        item.driverId === id ||
-        item.constructorId ===
-          id /* here we want the program to return whatever we selected whether from the drivers OR(||) the constructors*/,
+      (item) => item.driverId === id || item.constructorId === id
     );
-    onSelect(found || null); /*here we send the result back to compare.js */
+    onSelect(found || null);
   };
+
+  // Helper to resolve the correct color (with driver override check)
+  const getItemColor = (item) => {
+    if (!item) return "#444";
+    const teamId = item.Constructor?.constructorId || item.constructorId;
+    const team = teamStyles[teamId];
+    if (!team) return "#444";
+
+    if (isDriver && team.drivers && team.drivers[item.driverId]) {
+      return team.drivers[item.driverId];
+    }
+    return team.mainColor || "#444";
+  };
+
+  const selectedColor = selectedItem ? getItemColor(selectedItem) : null;
 
   return (
     <div className="custom-select-wrapper">
       <DropdownButton
         id="dropdown-basic-button"
         className="f1-dropdown"
-        title={getButtonTitle()}
+        title={
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            {selectedColor && (
+              <span
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: selectedColor,
+                  boxShadow: `0 0 6px ${selectedColor}`,
+                  display: "inline-block",
+                }}
+              />
+            )}
+            {getButtonTitle()}
+          </span>
+        }
         onSelect={handleSelect}
         variant="dark"
       >
@@ -44,17 +71,19 @@ function F1Dropdown({
         <Dropdown.Divider />
 
         {options.map((item) => {
-          /* here map loops threw the options array and item represents the specific driver/constructor tht its holding in its hand */
-          const id =
-            item.driverId ||
-            item.constructorId; /* here we have a variable which doesn't change hense the const and its called id it checks if the activeTab is drivers and returns those ids or if its contstructors then returns undefined and checks throough the second list of options and then saves that into id */
-          const label =
-            activeTab === "drivers"
-              ? `${item.givenName} ${item.familyName}`
-              : item.name;
+          const id = item.driverId || item.constructorId;
+          const label = isDriver
+            ? `${item.givenName} ${item.familyName}`
+            : item.name;
+          const color = getItemColor(item);
 
           return (
-            <Dropdown.Item key={id} eventKey={id} className="f1-dropdown-item">
+            <Dropdown.Item
+              key={id}
+              eventKey={id}
+              className="dropdown-item"
+              style={{ "--team-color": color }}
+            >
               {label}
             </Dropdown.Item>
           );
