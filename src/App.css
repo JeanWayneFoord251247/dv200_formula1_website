@@ -342,8 +342,10 @@ main {
 
 .f1-dropdown .dropdown-item:hover {
   color: #ffffff;
-  background-color: var(--team-color, #444);
+  background-color: #2a2a2a;
+  border-left: 6px solid var(--team-color, #444);
   box-shadow: 0 0 8px var(--team-color, #444);
+  border-radius: 2px;
 }
 
 .Selection-Compare .btn-compare-main {

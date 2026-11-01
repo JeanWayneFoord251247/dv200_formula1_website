@@ -27,7 +27,6 @@ function F1Dropdown({
     onSelect(found || null);
   };
 
-  // Helper to resolve the correct color (with driver override check)
   const getItemColor = (item) => {
     if (!item) return "#444";
     const teamId = item.Constructor?.constructorId || item.constructorId;
